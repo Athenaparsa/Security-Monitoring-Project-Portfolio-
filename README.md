@@ -108,19 +108,18 @@ This project enhances key cybersecurity and DevSecOps skills, including:
 
 ##  👥 Collaborators 
 This project was developed collaboratively by:
+- Dr Charles Clarke 
 - Kanyinsola Fakehinde (Github - Kanyin-Sola)
+- Matthew Faller
 - Niloofar Thaha (Github - nilufar-nibraz)
+  
 
 We welcome contributions! If you'd like to contribute, feel free to open an issue or submit a pull request.
 
----
-
 ##  🔗 Connect With Me 
-💼  LinkedIn:  [Your LinkedIn Profile]
- - Kanyinsola Fakehinde (a87238254)
- - Niloofar Thaha 
-📩  Email:  [Your Email]  
-📌  GitHub:  [Your GitHub Profile]  
+💼  LinkedIn: linkedin.com/in/athena-parsa
+📩  Email: athena.parsa1@gmail.com 
+
 
 🚀  If you find this project useful, don’t forget to star ⭐ the repo! 
 
