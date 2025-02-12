@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory Card Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 500px;
+            margin: 20px;
+        }
+        .card {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+        }
+        .card-front {
+            background-color: #4a90e2;
+        }
+        .card-back {
+            background-color: #34495e;
+            transform: rotateY(180deg);
+        }
+        .score {
+            font-size: 1.5em;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>Memory Card Game</h1>
+    <div class="score">Moves: <span id="moves">0</span></div>
+    <div class="game-board" id="gameBoard"></div>
+    <button onclick="resetGame()">New Game</button>
+
+    <script>
+        const symbols = ['A', 'B', 'C', 'D', '1', '2', '3', '4'];
+        let cards = [];
+        let flippedCards = [];
+        let moves = 0;
+        let matchedPairs = 0;
+
+        function createBoard() {
+            const gameBoard = document.getElementById('gameBoard');
+            const cardPairs = [...symbols, ...symbols];
+            cards = cardPairs.sort(() => Math.random() - 0.5);
+            
+            gameBoard.innerHTML = '';
+            cards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = index;
+                card.dataset.symbol = symbol;
+                
+                const front = document.createElement('div');
+                front.className = 'card-face card-front';
+                
+                const back = document.createElement('div');
+                back.className = 'card-face card-back';
+                back.textContent = symbol;
+                
+                card.appendChild(front);
+                card.appendChild(back);
+                card.addEventListener('click', flipCard);
+                gameBoard.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            if (flippedCards.length === 2) return;
+            if (this.classList.contains('flipped')) return;
+
+            this.classList.add('flipped');
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                matchedPairs++;
+                flippedCards = [];
+                if (matchedPairs === symbols.length) {
+                    setTimeout(() => {
+                        alert(`Congratulations! You won in ${moves} moves!`);
+                    }, 500);
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function resetGame() {
+            moves = 0;
+            matchedPairs = 0;
+            flippedCards = [];
+            document.getElementById('moves').textContent = moves;
+            createBoard();
+        }
+
+        // Initialize the game
+        createBoard();
+    </script>
+</body>
+</html>
