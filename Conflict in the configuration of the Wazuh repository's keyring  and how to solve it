@@ -1,0 +1,33 @@
+Step 1: Check the Wazuh Repository Entry
+Open the sources list to see the configuration for Wazuh. Run the following command to open the file in a text editor:
+
+sudo nano /etc/apt/sources.list.d/wazuh.list
+
+Look for the repository entry. It should look something like:
+
+deb [signed-by=/usr/share/keyrings/wazuh-keyring.gpg] https://packages.wazuh.com/4.x/apt stable main
+
+Verify the signed-by path. The error suggests there might be two conflicting paths, likely /usr/share/keyrings/wazuh-keyring.gpg and /usr/share/keyrings/wazuh-keyrings.gpg. Confirm the exact path being used.
+
+If you notice a conflicting path, update the signed-by field to the correct one (/usr/share/keyrings/wazuh-keyring.gpg) and save the file.
+
+Step 2: Re-import the Keyring
+To ensure the correct keyring is being used, re-import the Wazuh GPG key.
+
+Run the following command:
+
+sudo wget -O /usr/share/keyrings/wazuh-keyring.gpg https://packages.wazuh.com/key/GPG-KEY-WAZUH
+
+This will download the official Wazuh GPG key and save it to the correct location.
+
+Step 3: Update the Package List
+Once the sources file and keyring are properly configured, update the package list.
+
+Run:
+
+sudo apt update
+If there are no errors, proceed with the system upgrade:
+
+bash
+CopyEdit
+sudo apt upgrade -y
